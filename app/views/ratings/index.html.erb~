@@ -7,7 +7,7 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-   <% !(if rating.beer_id == 0) %>
+   <% if rating.beer_id not 0 %>
    <li><%= rating %></li>
    <% end %>
  <% end %>
