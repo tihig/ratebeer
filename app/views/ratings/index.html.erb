@@ -7,9 +7,7 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-   <% byebug if rating.beer_id == 0 %>
-	<!-- nothing to show -->
-   <% else %>
+   <% if rating.beer_id != 0 %>
    <li><%= rating %></li>
    <% end %>
  <% end %>
