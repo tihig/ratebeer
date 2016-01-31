@@ -7,7 +7,7 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-   <% if rating.beer_id == 0 %>
+   <% byebug if rating.beer_id == 0 %>
    <% else %>
    <li><%= rating %>  <%= link_to 'Destroy', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' }  %></li>
    <% end %>
