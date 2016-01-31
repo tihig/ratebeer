@@ -6,7 +6,7 @@
 
 <p>
    Style: 
-   <%= @beer.style %>
+   <%= @beer %>
 </p>
 
 <p>

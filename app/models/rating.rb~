@@ -1,8 +1,9 @@
-class Rating < ActiveRecord
- belongs_to :beer
+class Rating < ActiveRecord::Base
+ belongs_to :beer, :dependent => destroy
 
-def to_s
-    puts "#{self.beer.name}  #{score}"
+  def to_s
+    "#{self.beer.name} #{score}"
   end
 
 end
+

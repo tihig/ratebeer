@@ -1,0 +1,7 @@
+module average_rating
+
+def average(values)
+    average = values.sum(:score) / values.count
+    
+    "#{average}"
+end

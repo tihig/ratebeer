@@ -1,10 +1,29 @@
 class RatingsController < ApplicationController
-  before_action :set_rating, only: [:index]
+  before_action :set_rating, only: [:show, :edit, :update, :destroy]
+
   def index
-	@ratings = Rating.all
+      @ratings = Rating.all
   end
 
   def show
-	@ratings = Rating.to_s
+  end
+
+
+  # GET /ratings/new
+  def new
+    @rating = Rating.new
+    @beers = Beer.all
+  end
+
+  def create
+     Rating.create params.require(:rating).permit(:score, :beer_id)
+     redirect_to ratings_path
+  end
+
+def destroy
+    rating = Rating.find_by(params[:id])
+    rating.delete
+    redirect_to ratings_path
   end
 end
+

@@ -1,8 +1,9 @@
 class Rating < ActiveRecord::Base
  belongs_to :beer
 
-def to_s
-    puts "#{self.beer.name}  #{score}"
+  def to_s
+    "#{self.beer.name} #{score}"
   end
 
 end
+
