@@ -1,4 +1,4 @@
 class BeerClub < ActiveRecord::Base
   has_many :memberships
-  validates :memberships, uniqueness: true
+
 end
