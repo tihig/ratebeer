@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :style %><br>
-    <%= f.select :style, options_for_select(@style) %>
+    <%= f.select :style, options_for_select(["Weizen", "Lager", "Pale ale", "IPA", "Porter"]) %>
   </div>
   <div class="field">
     <%= f.label :brewery_id %>

@@ -1,7 +1,19 @@
 class Brewery < ActiveRecord::Base
  include RatingAverage
+
+ validates :name, presence: :true
+ validate :year_maximum_and_minimum
+
  has_many :beers, dependent: :destroy
  has_many :ratings, through: :beers
+
+  def year_maximum_and_minimum
+    min = 1041
+    max = Time.now.year + 1
+    if year < min || year > max
+      errors.add(:year, "Year cannot be less than 1042 or greater than current year")
+    end
+  end
 
   def to_s
     "#{name}"

@@ -7,12 +7,9 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-   <% if rating.beer_id not 0 %>
-   <li><%= rating %></li>
-   <% end %>
+     <% user = User.find(rating.user_id)%>
+    <li> <%= rating %> <%= link_to user.username, user %> <%= link_to 'delete', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' } %></li>
  <% end %>
 </ul>
 
-<p>
-<%= link_to 'New Rating',new_rating_path %>
-</p>
+

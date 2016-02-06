@@ -7,12 +7,9 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-   <% if rating.beer_id != 0 %>
-   <li><%= rating %></li>
-   <% end %>
+     <% user = User.find(rating.user_id)%>
+    <li> <%= rating %> <%= link_to user.username, user %></li>
  <% end %>
 </ul>
 
-<p>
-<%= link_to 'New Rating',new_rating_path %>
-</p>
+
