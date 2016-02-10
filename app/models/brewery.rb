@@ -1,34 +1,9 @@
 class Brewery < ActiveRecord::Base
- include RatingAverage
+  include RatingAverage
 
- validates :name, presence: :true
- validate :year_maximum_and_minimum
+  validates :name, presence: true
+  validates :year, numericality: { less_than_or_equal_to: Proc.new { Time.now.year } }
 
- has_many :beers, dependent: :destroy
- has_many :ratings, through: :beers
-
-  def year_maximum_and_minimum
-    min = 1041
-    max = Time.now.year + 1
-    if year < min or year > max
-      errors.add(:year, "Year cannot be less than 1042 or greater than current year")
-    end
-  end
-
-  def to_s
-    "#{name}"
-  end
-
-  def print_report
-    puts name
-    puts "established at year #{year}"
-    puts "number of beers #{beers.count}"
-  end
-
-  def restart
-    self.year = 2016
-    puts "changed year to #{year}"
-  end
-
-
+  has_many :beers, dependent: :destroy
+  has_many :ratings, through: :beers
 end

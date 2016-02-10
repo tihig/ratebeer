@@ -60,9 +60,16 @@ class BreweriesController < ApplicationController
       format.html { redirect_to breweries_url, notice: 'Brewery was successfully destroyed.' }
       format.json { head :no_content }
     end
-end
+  end
 
- private
+  private
+    def authenticate
+      admin_accounts = { "admin" => "secret", "pekka" => "beer", "arto" => "foobar", "matti" => "ittam"}
+      authenticate_or_request_with_http_basic do |username, password|
+        admin_accounts[username] == password
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_brewery
       @brewery = Brewery.find(params[:id])
@@ -72,14 +79,4 @@ end
     def brewery_params
       params.require(:brewery).permit(:name, :year)
     end
-
-   def authenticate
-      admin_accounts = { "admin" => "secret", "pekka" => "beer", "arto" => "foobar", "matti" => "ittam"}
-
-      authenticate_or_request_with_http_basic do |username, password|
-       if admin_accounts[username]== password
-        'Here we are'
-       end
-   end
-  end
 end
