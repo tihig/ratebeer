@@ -32,14 +32,10 @@ describe "Rating" do
     user.ratings << f1
     user.ratings << f2
     visit user.id
-    save_and_open_page
-    #within(find("#rating")) do
-     # click_on("delete")
-    #end
-    #click_button "Yes"
 
+    page.first(:link, "delete").click
 
-    #expect(user.ratings.count).to eq(1)
+    expect(user.ratings.count).to eq(1)
   end
 
  

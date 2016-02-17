@@ -34,3 +34,33 @@ describe "User" do
     }.to change{User.count}.by(1)
   end
 end
+
+ describe "who has signed in" do
+  let!(:brewery) { FactoryGirl.create :brewery, name:"Koff" }
+  let!(:brewery2) { FactoryGirl.create :brewery, name:"Olvi" }
+  let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
+  let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery }
+  let!(:beer3) { FactoryGirl.create :beer, name:"Olvin kolmonen", brewery:brewery2 }
+  let!(:user) {FactoryGirl.create :user }
+
+  before :each do
+    sign_in(username:"Pekka", password:"Foobar1")
+      user.ratings << FactoryGirl.create(:rating2, beer:beer1)
+      user.ratings << FactoryGirl.create(:rating2, beer:beer3)
+      user.ratings << FactoryGirl.create(:rating3, beer:beer2)
+  end
+
+   it "has favorite style" do
+    page.first(:link, "Pekka").click
+    save_and_open_page
+    expect(page).to have_content 'Favorite style is Lager'
+  end
+
+   it "has favorite brewery" do
+    page.first(:link, "Pekka").click
+    expect(page).to have_content 'Favorite brewery is Koff'
+  end
+
+ end
+
+

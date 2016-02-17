@@ -9,7 +9,7 @@
 </p>
 
 <p>
-  Favorite brewery is <%= @user.favorite_brewery%>
+  Favorite brewery is
 </p>
 
 <p>

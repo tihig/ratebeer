@@ -1,8 +1,15 @@
 require 'rails_helper'
 
 describe "Breweries page" do
+ let!(:user) { FactoryGirl.create :user }
+
+  before :each do
+    sign_in(username:"Pekka", password:"Foobar1")
+  end
+
   it "should not have any before been created" do
     visit breweries_path
+    
     expect(page).to have_content 'Listing Breweries'
     expect(page).to have_content 'Number of breweries: 0'
 

@@ -17,8 +17,61 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+
  def favorite_beer
     return nil if ratings.empty?
-    ratings.sort_by{ |r| r.score }.last.beer            
+    ratings.order(score: :desc).limit(1).first.beer          
   end
+
+ def favorite_style
+    return nil if ratings.empty?
+    find_beers
+  end
+
+ def favorite_brewery
+    return nil if ratings.empty?
+    find_brewerys
+  end
+
+ def find_beers
+   a = average_rating
+   r = ratings.find_all{ |rating| rating.score > a}
+  
+   s = Array.new(r.count)
+   i = 0
+    r.each do |rating|
+     s.insert(i, Beer.find(rating.beer_id).style)
+     i = i+1
+    end
+   average_string(s)
+  end
+
+ def find_brewerys
+   a = average_rating
+   r = ratings.find_all{ |rating| rating.score > a}
+  
+   b = Array.new(r.count)
+   i = 0
+    r.each do |rating|
+     b.insert(i, Brewery.find(Beer.find(rating.beer_id).brewery_id).name)
+     i = i+1
+    end
+   average_string(b)
+  end
+
+ def average_string(s)
+   a = [0,0,0,0,0]
+   counts = Hash.new 0
+
+  s.each do |style|
+    if not style.nil?
+   counts[style] += 1
+  end
+  end
+  counts.key(counts.values.max)
+
+ end
+
+
+
 end
