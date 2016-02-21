@@ -38,9 +38,10 @@ end
  describe "who has signed in" do
   let!(:brewery) { FactoryGirl.create :brewery, name:"Koff" }
   let!(:brewery2) { FactoryGirl.create :brewery, name:"Olvi" }
-  let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
-  let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery }
-  let!(:beer3) { FactoryGirl.create :beer, name:"Olvin kolmonen", brewery:brewery2 }
+  let!(:style) { FactoryGirl.create :style}
+  let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery, style:style }
+  let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery, style:style }
+  let!(:beer3) { FactoryGirl.create :beer, name:"Olvin kolmonen", brewery:brewery2, style:style }
   let!(:user) {FactoryGirl.create :user }
 
   before :each do

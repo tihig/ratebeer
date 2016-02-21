@@ -9,11 +9,14 @@
 </p>
 
 <p>
-  Favorite brewery is
+  Favorite brewery is 
+ <% if @user.ratings.count > 0 %>
+  <%= @user.favorite_brewery.name%>
+ <% end %>
 </p>
 
 <p>
-  Favorite style is <%= @user.favorite_style%>
+  Favorite style is <%= @user.favorite_style.name%>
 </p>
 
 
