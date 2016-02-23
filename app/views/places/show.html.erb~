@@ -16,7 +16,7 @@
  <%= place["zip"] %>    <%= place["city"] %>
 </p>
 
-
+<!-- iframe ei näy -->
 <iframe src= <% place["blogmap"] %>></iframe>
 
 
