@@ -17,61 +17,36 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-
- def favorite_beer
+  def favorite_beer
     return nil if ratings.empty?
-    ratings.order(score: :desc).limit(1).first.beer          
+    ratings.order(score: :desc).limit(1).first.beer
   end
 
- def favorite_style
+  def favorite_style
+    favorite :style 
+  end
+
+  def favorite_brewery
+    favorite :brewery
+  end
+
+  def favorite(category)
     return nil if ratings.empty?
-    find_beers
+
+    rated = ratings.map{ |r| r.beer.send(category) }.uniq
+    rated.sort_by { |item| -rating_of(category, item) }.first
   end
 
- def favorite_brewery
-    return nil if ratings.empty?
-    find_brewerys
+
+  private
+
+  def rating_of(category, item)
+    ratings_of = ratings.select{ |r| r.beer.send(category)==item }
+    ratings_of.map(&:score).inject(&:+) / ratings_of.count.to_f
   end
 
- def find_beers
-   a = average_rating
-   r = ratings.find_all{ |rating| rating.score > a}
-  
-   s = Array.new(r.count)
-   i = 0
-    r.each do |rating|
-     s.insert(i, Beer.find(rating.beer_id).style)
-     i = i+1
-    end
-   average_string(s)
+
+  def self.top(n)
+    sorted =User.all.sort{ |u| u.ratings.count }.reverse!.first(n)
   end
-
- def find_brewerys
-   a = average_rating
-   r = ratings.find_all{ |rating| rating.score > a}
-  
-   b = Array.new(r.count)
-   i = 0
-    r.each do |rating|
-     b.insert(i, Brewery.find(Beer.find(rating.beer_id).brewery_id).name)
-     i = i+1
-    end
-   average_string(b)
-  end
-
- def average_string(s)
-   a = [0,0,0,0,0]
-   counts = Hash.new 0
-
-  s.each do |style|
-    if not style.nil?
-   counts[style] += 1
-  end
-  end
-  counts.key(counts.values.max)
-
- end
-
-
-
 end

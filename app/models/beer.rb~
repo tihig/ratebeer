@@ -4,10 +4,22 @@ class Beer < ActiveRecord::Base
   validates :name, presence: true
 
   belongs_to :brewery
+  belongs_to :style
   has_many :ratings, dependent: :destroy
   has_many :raters, -> { uniq }, through: :ratings, source: :user
 
   def to_s
     "#{name} #{brewery.name}"
   end
+
+  def self.top(n)
+    sorted = Beer.all.sort{ |b| b.average_rating }.reverse!.first(n)
+  end
+
+  def self.top_styles(n)
+    beers = top(Beer.count)
+    styles = beers.collect{ |b| Style.find(b.style_id) }.uniq.first(n)
+#self.top(n).collect{ |b| Style.find(b.style_id) }
+  end
+
 end

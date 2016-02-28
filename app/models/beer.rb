@@ -11,4 +11,14 @@ class Beer < ActiveRecord::Base
   def to_s
     "#{name} #{brewery.name}"
   end
+
+  def self.top(n)
+    sorted = Beer.all.sort{ |b| b.average_rating }.reverse!.first(n)
+  end
+
+  def self.top_styles(n)
+    beers = top(Beer.count)
+    styles = beers.collect{ |b| Style.find(b.style_id) }.uniq.first(n)
+  end
+
 end

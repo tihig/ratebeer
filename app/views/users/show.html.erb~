@@ -16,7 +16,9 @@
 </p>
 
 <p>
+<% if @user.ratings.count > 0 %>
   Favorite style is <%= @user.favorite_style.name%>
+ <% end %>
 </p>
 
 

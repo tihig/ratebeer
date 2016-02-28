@@ -88,9 +88,7 @@
 <% end %>
 
 
- <h3> 
-  All ratings
- </h3>
+
 
 <ul class="list-group">
   <% @ratings.each do |rating| %>
